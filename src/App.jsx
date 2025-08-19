@@ -1,21 +1,27 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+const BASE = import.meta.env.BASE_URL;   // obtiene la base del proyecto (Ej: /EvaluadorCorales2.2/)
+const LOGO_HEADER = `${BASE}logo.jpg`;   // arma la ruta completa para logo.png
 
 const CRITERIOS=['Creatividad en la composición','Calidad de interpretación','Desenvolvimiento escénico','Ritmo y armonía','Mensaje de la canción'];
 
 function TopBar({ eventName, setView, view }){
+  const BASE = import.meta.env.BASE_URL;
+  const LOGO_HEADER = `${BASE}logo.jpg`; // 👈 usamos el .jpg de cabecera
+
   return (
     <header className="topbar">
-      <div className="brand" onClick={()=>setView('home')}>
-        <img src="/logo.jpg" alt="Festival de Corales" />
+      <div className="brand" onClick={() => setView('home')}>
+        <img src={LOGO_HEADER} alt="Festival de Corales" />
         <div className="brand-text">
           <strong>{eventName}</strong>
-          <small>{view==='final' ? 'Resultados finales' : 'Evaluación'}</small>
+          <small>{view === 'final' ? 'Resultados finales' : 'Evaluación'}</small>
         </div>
       </div>
     </header>
   );
 }
+
 
 function generatePIN(){ return Math.floor(1000 + Math.random()*9000).toString(); }
 

@@ -37,7 +37,7 @@ body {
 
   /* Nuevo fondo */
   background: url('/logo2.png') no-repeat center center;
-  background-size: cover;  /* se ajusta a toda la pantalla */
+  background-size: min(120vmin, 1200px);  /* se ajusta a toda la pantalla */
   color: #fff;
 }
 
