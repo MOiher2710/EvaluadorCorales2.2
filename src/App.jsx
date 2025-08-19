@@ -96,7 +96,7 @@ export default function App(){
 
   if(view==='home'){
     return (
-      <div className='wrap'>
+      <div className='wrap home'>
         <TopBar eventName={evento} setView={setView} view={view}/>
         <div className='content'>
           <h1>Bienvenido</h1>
