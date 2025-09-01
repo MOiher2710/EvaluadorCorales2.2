@@ -250,60 +250,54 @@ export default function App(){
     );
   }
 
-  if(view==='final'){
-    React.useEffect(()=>{
-      const cvs=document.getElementById('fx'); if(!cvs) return;
-      const ctx=cvs.getContext('2d'); let W,H,rafId,running=true;
-      const resize=()=>{ W=cvs.width=window.innerWidth; H=cvs.height=window.innerHeight; };
-      resize(); window.addEventListener('resize',resize);
-      const rand=(min,max)=>Math.random()*(max-min)+min;
-      const colors=['#f28c28','#d1e5ed','#ffffff']; const bursts=[];
-      function spawn(){ const x=rand(W*.15,W*.85), y=rand(H*.15,H*.45), n=50, ps=[], color=colors[(Math.random()*colors.length)|0];
-        for(let i=0;i<n;i++){ const a=(Math.PI*2*i)/n, s=rand(1.5,4.2);
-          ps.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rand(45,80),color}); }
-        bursts.push(ps);
-      }
-      let t=0;
-      function loop(){ if(!running) return; rafId=requestAnimationFrame(loop);
-        ctx.fillStyle='rgba(0,0,0,0.15)'; ctx.fillRect(0,0,W,H);
-        if(++t%35===0) spawn();
-        for(let b=bursts.length-1;b>=0;b--){ const ps=bursts[b];
-          for(let i=ps.length-1;i>=0;i--){ const p=ps[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.04; p.life--;
-            ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill();
-            if(p.life<=0) ps.splice(i,1);
-          } if(ps.length===0) bursts.splice(b,1);
-        }
-      } loop();
-      return ()=>{ running=false; cancelAnimationFrame(rafId); window.removeEventListener('resize',resize); if(ctx) ctx.clearRect(0,0,W,H); };
-    },[tablaTotales]);
+  // ✅ Reemplaza TODO tu bloque de "final" por esto
+if (view === 'final') {
+  const orden = Array.isArray(tablaTotales) ? tablaTotales : [];
+  const ganador = orden[0];          // [nombre, total] o undefined
+  const top3 = orden.slice(0, 3);
 
-    const top3 = tablaTotales.slice(0,3);
-    const noData = top3.length === 0;
+  return (
+    <div className="wrap final">
+      <TopBar eventName={evento} setView={setView} view={view} />
+      <div className="content podium">
+        <h2>Resultados Finales</h2>
 
-    return (
-      <div className='wrap'>
-        <TopBar eventName={evento} setView={setView} view={view} />
-        <canvas id="fx" className="fx-canvas" />
-        <div className='content podium'>
-          <h2>Resultados Finales</h2>
-          {noData ? (
-            <p>Sin datos aún. Vuelve aquí cuando los jurados hayan evaluado. 🎼</p>
-          ) : (
+        {orden.length === 0 ? (
+          <p>Sin datos aún. Agrega notas y vuelve aquí. 🎼</p>
+        ) : (
+          <>
+            {/* Ganador destacado */}
+            <div className="winner" style={{
+              background:'#ffffff22',
+              border:'1px solid #ffffff44',
+              padding:'16px',
+              borderRadius:'14px',
+              margin:'12px 0'
+            }}>
+              <h3 style={{margin:'0 0 8px'}}>🏆 Ganador</h3>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                <strong style={{fontSize:'1.2rem'}}>{ganador[0]}</strong>
+                <span style={{fontWeight:800}}>{ganador[1]} pts</span>
+              </div>
+            </div>
+
+            {/* Top 3 */}
             <ol>
-              {top3.map(([ag,total],idx)=>(
+              {top3.map(([ag, total], idx) => (
                 <li key={ag} className={idx===0?'gold':idx===1?'silver':'bronze'}>
-                  <span className='place'>{idx+1}º</span>
-                  <span className='name'>{ag}</span>
-                  <span className='score'>{total} pts</span>
+                  <span className="place">{idx + 1}º</span>
+                  <span className="name">{ag}</span>
+                  <span className="score">{total} pts</span>
                 </li>
               ))}
             </ol>
-          )}
-          <button onClick={()=>setView('home')}>Volver al inicio</button>
-        </div>
-      </div>
-    );
-  }
+          </>
+        )}
 
+        <button onClick={() => setView('home')}>Volver al inicio</button>
+      </div>
+    </div>
+  );
+}
   return null;
 }

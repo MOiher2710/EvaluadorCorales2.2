@@ -289,3 +289,8 @@ tr.bronze,
     height: 38px;
   }
 }
+/* Estilos especiales solo para Resultados finales */
+.wrap.final {
+  background: url('/logo2.png') no-repeat right bottom;
+  background-size: 320px; /* ajusta el tamaño según te guste */
+}
