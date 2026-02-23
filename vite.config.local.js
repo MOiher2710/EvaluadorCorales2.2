@@ -1,3 +1,4 @@
+// vite.config.local.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -20,12 +21,16 @@ export default defineConfig({
           { src: 'logo2.png', sizes: '512x512', type: 'image/png' }
         ]
       },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,png,jpg,svg,ico}']
-      },
-      includeAssets: ['logo.jpg','logo2.png']
+      workbox: { globPatterns: ['**/*.{js,css,html,png,jpg,svg,ico}'] },
+      includeAssets: ['logo.jpg', 'logo2.png']
     })
   ],
-  base: './',        // 👈 para servir desde localhost
-  build: { outDir: 'docs' }
+  base: './',                 // para servir en localhost
+  build: {
+    outDir: 'docs',
+    rollupOptions: {
+      // 👇 evita que rollup intente resolver el módulo opcional de macOS
+      external: ['fsevents']
+    }
+  }
 })
