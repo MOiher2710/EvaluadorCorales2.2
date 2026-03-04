@@ -21,16 +21,19 @@ export default defineConfig({
           { src: 'logo2.png', sizes: '512x512', type: 'image/png' }
         ]
       },
-      workbox: { globPatterns: ['**/*.{js,css,html,png,jpg,svg,ico}'] },
+      workbox: { globPatterns: ['*/.{js,css,html,png,jpg,svg,ico}'] },
       includeAssets: ['logo.jpg', 'logo2.png']
     })
   ],
-  base: './',                 // para servir en localhost
-  build: {
-    outDir: 'docs',
-    rollupOptions: {
-      // 👇 evita que rollup intente resolver el módulo opcional de macOS
-      external: ['fsevents']
-    }
+
+  resolve: {
+  alias: {
+    fsevents: '/src/shims/fsevents.js'
   }
+},
+  base: './',       // para servir en localhost
+ build: {
+  outDir: 'docs',
+  rollupOptions: { external: ['fsevents'] }
+ }
 })
