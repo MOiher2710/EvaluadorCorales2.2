@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 const CRITERIOS = [
-  'Calidad Vocal & Afinacion',
+  'Calidad Vocal',
+  'Afinacion',
   'Ritmica',
-  'Balance vocal & Diccion',
-  'Calidad de interpretación',
-  'Oraginalidad & Puesta en escena'
+  'Balance Vocal & Diccion',
+  'Calidad interpretativa (OPE)',
 ];
 
 function TopBar({ eventName, setView, view }) {
